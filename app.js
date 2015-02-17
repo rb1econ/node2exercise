@@ -5,17 +5,21 @@ var app = express();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 
-app.get('/', function(req, res) {
+app.get('/:filename', function(req, res) {
 	// res.render('index');
-    var fileContents = fs.readFile('data.txt', function(err, data){
-      if(err){
-        throw err;
-      }
-    });
+	var fileContents = fs.readFile('data.txt', function(err, data){
+	  
+	  if(err){
+		throw err;
+	  }
+	  else{
+	  	console.log('async worked, THIS IS A CONSOLE.LOG')
+		res.header('Content-Type', 'text/html');
+		res.send(data);
+	  }
+	});
 
-    // res.header('Content-Type', 'text/html');
-    // res.send('./data.txt');
-    
+	
 });
 
 var server = app.listen(3208, function() {
