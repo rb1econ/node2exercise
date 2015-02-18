@@ -5,7 +5,7 @@ var app = express();
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 
-app.get('/:filename', function(req, res) {
+app.get('/', function(req, res) {
 	// res.render('index');
 	var fileContents = fs.readFile('data.txt', function(err, data){
 	  
@@ -18,8 +18,17 @@ app.get('/:filename', function(req, res) {
 		res.send(data);
 	  }
 	});
+});
 
-	
+app.get('/:filename', function(req, res){
+	var fileContents = fs.readFile(req.params.filename, function(err, data){
+		if(err){throw err}
+		else{
+			console.log('CONSOLE.LOG :filename function')
+			res.header('Content-Type', 'text/html');
+			res.send(data);
+		}
+	});
 });
 
 var server = app.listen(3208, function() {
